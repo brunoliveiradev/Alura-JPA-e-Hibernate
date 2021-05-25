@@ -36,4 +36,19 @@ public class ProdutoDAO {
         //CreateQuery cria o comando apenas, mas retornar os resultados é o getResultList
         return em.createQuery(jpql, Produto.class).getResultList();
     }
+
+    public List<Produto> buscarPorNome(String nome) {
+        // named parameter :nome, parameter ordinal = ?1 ?2 ...
+        String jpql = "SELECT p FROM Produto AS p WHERE p.nome = :nome";
+        return em.createQuery(jpql, Produto.class)
+                .setParameter("nome", nome)
+                .getResultList();
+    }
+
+    public List<Produto> buscarPorNomeCategoria(String nome) {
+        String jpql = "SELECT p FROM Produto AS p WHERE p.categoria.nome = ?1";
+        return em.createQuery(jpql, Produto.class)
+                .setParameter(1, nome)
+                .getResultList();
+    }
 }

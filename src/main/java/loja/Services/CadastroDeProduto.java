@@ -18,11 +18,17 @@ public class CadastroDeProduto {
         EntityManager em = JPAUtil.getEntityManager();
         ProdutoDAO produtoDAO = new ProdutoDAO(em);
 
-        Produto p = produtoDAO.buscarPorId(1l);
+        Produto p = produtoDAO.buscarPorId(1L);
         System.out.println(p.getPreco());
 
         List<Produto> buscarTodos = produtoDAO.buscarTodos();
         buscarTodos.forEach(produto -> System.out.println(p.getNome()));
+
+        List<Produto> buscarNome = produtoDAO.buscarPorNome("Xiaomi Redmi");
+        buscarNome.forEach(produto -> System.out.println(p.getNome()));
+
+        List<Produto> buscarPorNomeCategoria = produtoDAO.buscarPorNomeCategoria("CELULAR");
+        buscarPorNomeCategoria.forEach(produto -> System.out.println(p.getNome()));
     }
 
     private static void cadastrarProduto() {
