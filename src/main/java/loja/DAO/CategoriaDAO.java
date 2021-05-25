@@ -15,4 +15,14 @@ public class CategoriaDAO {
     public void cadastrar(Categoria categoria) {
         this.em.persist(categoria);
     }
+
+    public void atualizar(Categoria categoria){
+        this.em.merge(categoria);
+    }
+
+    // Para ser funcional precisa estar em uma estado 'Managed', pra isso precisa do merge antes.
+    public void remover(Categoria categoria) {
+        categoria = em.merge(categoria);
+        this.em.remove(categoria);
+    }
 }
