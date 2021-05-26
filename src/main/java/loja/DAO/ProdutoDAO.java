@@ -3,6 +3,7 @@ package loja.DAO;
 import loja.model.Produto;
 
 import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ProdutoDAO {
@@ -37,18 +38,27 @@ public class ProdutoDAO {
         return em.createQuery(jpql, Produto.class).getResultList();
     }
 
-    public List<Produto> buscarPorNome(String nome) {
+    public List<Produto> buscarPorNomeProduto(String nomeProduto) {
         // named parameter :nome, parameter ordinal = ?1 ?2 ...
         String jpql = "SELECT p FROM Produto AS p WHERE p.nome = :nome";
         return em.createQuery(jpql, Produto.class)
-                .setParameter("nome", nome)
+                .setParameter("nome", nomeProduto)
                 .getResultList();
     }
 
-    public List<Produto> buscarPorNomeCategoria(String nome) {
+    public List<Produto> buscarPorNomeCategoria(String nomeCategoria) {
         String jpql = "SELECT p FROM Produto AS p WHERE p.categoria.nome = ?1";
         return em.createQuery(jpql, Produto.class)
-                .setParameter(1, nome)
+                .setParameter(1, nomeCategoria)
                 .getResultList();
+    }
+
+    // Limitando dados de uma consulta
+    public BigDecimal buscarPorPrecoProdutoComNome(String nomeProduto) {
+        // named parameter :nome, parameter ordinal = ?1 ?2 ...
+        String jpql = "SELECT p.preco FROM Produto AS p WHERE p.nome = :nome";
+        return em.createQuery(jpql, BigDecimal.class)
+                .setParameter("nome", nomeProduto)
+                .getSingleResult();
     }
 }
