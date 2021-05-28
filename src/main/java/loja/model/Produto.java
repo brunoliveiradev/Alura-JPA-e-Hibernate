@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "tb_produtos")
 @NamedQuery(name = "Produto.produtosPorCategoria",
-        query = "SELECT p FROM Produto AS p WHERE p.categoria.nome = :nome")
+        query = "SELECT p FROM Produto AS p WHERE p.categoria.id.nome = :nome")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Produto {
 //mapeamento da entidade
