@@ -40,7 +40,7 @@ public class PedidoDAO {
                 "JOIN pedido.itens AS item " +
                 "JOIN item.produto AS produto " +
                 "GROUP BY produto.nome " +
-                "ORDER BY item.quantidade DESC";
+                "ORDER BY SUM(item.quantidade) DESC";
         return em.createQuery(jpql, RelatorioVendasVO.class).getResultList();
     }
 
