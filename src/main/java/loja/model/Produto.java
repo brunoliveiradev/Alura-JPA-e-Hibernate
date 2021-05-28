@@ -6,6 +6,8 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "tb_produtos")
+@NamedQuery(name = "Produto.produtosPorCategoria",
+        query = "SELECT p FROM Produto AS p WHERE p.categoria.nome = :nome")
 public class Produto {
 //mapeamento da entidade
     @Id
@@ -17,7 +19,7 @@ public class Produto {
     private BigDecimal preco;
     private LocalDate dataCadastro = LocalDate.now();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Categoria categoria;
 
     public Produto(String nome, String descricao, BigDecimal preco, Categoria categoria) {

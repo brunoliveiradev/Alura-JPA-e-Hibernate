@@ -19,7 +19,10 @@ public class Pedido {
 
     private LocalDate data = LocalDate.now();
 
-    @ManyToOne
+    /* JPA faz um JOIN SEMPRE que houver um SELECT ou FIND na entidade Pedido, padrão EAGER;
+    a tag fetch define o comportamento se será Lazy ou Eager, Lazy será apenas quando acessado a informação
+    */
+    @ManyToOne(fetch = FetchType.LAZY)
     private Cliente cliente;
 
     //Relacionamento bidirecional, geralmente se coloca no lado do OneToMany
@@ -71,5 +74,13 @@ public class Pedido {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public List<ItemPedido> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemPedido> itens) {
+        this.itens = itens;
     }
 }

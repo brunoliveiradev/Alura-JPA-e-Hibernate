@@ -2,10 +2,9 @@ package loja.util;
 
 import loja.DAO.CategoriaDAO;
 import loja.DAO.ClienteDAO;
+import loja.DAO.PedidoDAO;
 import loja.DAO.ProdutoDAO;
-import loja.model.Categoria;
-import loja.model.Cliente;
-import loja.model.Produto;
+import loja.model.*;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
@@ -24,11 +23,19 @@ public class PopularBDUtil {
 
         Cliente cliente = new Cliente("Bruno", "111.222.333-44");
 
+        Pedido pedido = new Pedido(cliente);
+        pedido.adicionarItem(new ItemPedido(10, pedido, celular));
+        pedido.adicionarItem(new ItemPedido(40, pedido, videogame));
+
+        Pedido pedido2 = new Pedido(cliente);
+        pedido.adicionarItem(new ItemPedido(2, pedido, computador));
+
         // Utiliza uma classe de suporte para pegar a conexão do Entity Manager
         EntityManager em = JPAUtil.getEntityManager();
         ProdutoDAO produtoDAO = new ProdutoDAO(em);
         CategoriaDAO categoriaDAO = new CategoriaDAO(em);
         ClienteDAO clienteDAO = new ClienteDAO(em);
+        PedidoDAO pedidoDAO = new PedidoDAO(em);
 
         //Com os frameworks, as transações, o commit e o close são feito por eles
 
@@ -44,6 +51,9 @@ public class PopularBDUtil {
         produtoDAO.cadastrar(computador);
 
         clienteDAO.cadastrar(cliente);
+
+        pedidoDAO.cadastrar(pedido);
+        pedidoDAO.cadastrar(pedido2);
         // Commitar a transação
         em.getTransaction().commit();
         // Fechar a transação
